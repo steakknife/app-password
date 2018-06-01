@@ -72,6 +72,12 @@
     
     for (int i = 0;i < numberOfCodes; i++) _phraseVerify[i] = _phrase[i] = @" ";
 }
+
+
+//******************
+//******************
+//**
+//**
 -(void)        initCodes:(NSInteger) numberOfCodes {
     
     UICollectionViewFlowLayout * layout;
@@ -106,6 +112,12 @@
     layout.minimumLineSpacing       = 1.0f;
     layout.sectionInset             = insets;
     
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(220.0, 0 /*170*/, 100.0, 30.0);
+    [button setTitle:@"Forgot?" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(forgotPass:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    
     
     if ( nil != self.container ) {
         
@@ -135,11 +147,22 @@
     self.passportCV.dataSource      = self;
     self.code                       = 0;
 }
+
+
+//******************
+//******************
+//**
+//**
 -(void)    setBackground:(UIImage *) background    {
     
     if ( nil != _imageView ) _imageView.image = background;
 }
 
+
+//******************
+//******************
+//**
+//**
 -(void) initKeyboard {
     
     UICollectionViewFlowLayout * layout;
@@ -191,7 +214,6 @@
     self.keyboardCV.backgroundColor = [UIColor clearColor];
 
     if ( nil != self.container )
-    
         [self.container addSubview:self.keyboardCV];
     else
         [self.view addSubview:self.keyboardCV];
@@ -202,6 +224,12 @@
     
     if ( self.keyboardRotating ) [self rotateKeyboard];
 }
+
+
+//******************
+//******************
+//**
+//**
 -(void) setKeys      {
     
     _keys      = [[NSMutableArray alloc] initWithObjects: @"9"
@@ -242,6 +270,12 @@
     if ( url ) _backKey = [UIImage imageWithContentsOfFile:url.path];
     
 }
+
+
+//******************
+//******************
+//**
+//**
 -(void) setLabel     {
     
     self.phraseTitleLabel.text     = (_phraseCurrent == _phrase)
@@ -253,6 +287,13 @@
                                    : @"";
 
 }
+
+
+
+//******************
+//******************
+//**
+//**
 -(void) chkLabelText {
     
     if ( nil != _phraseVerify ) {
@@ -263,6 +304,11 @@
     }
 }
 
+
+//******************
+//******************
+//**
+//**
 -(void) setVerify:(NSString *)verify {
 
     self.processControl        = PASS_CREATE;
@@ -286,6 +332,12 @@
         if ( self.keyboardRotating ) [self rotateKeyboard];
     }
 }
+
+
+//******************
+//******************
+//**
+//**
 -(void) adjustForContainer           {
     
     CGRect   lFrame   = self.phraseTitleLabel.frame;  //phraseTitleLabel
@@ -327,8 +379,9 @@
     [self.container           addSubview:self.phraseSubtitleLabel];
 }
 
+
 //------------------------------------------------------------------------------
-// UICollectionView Datastore delegate protocol methodes
+// UICollectionView Datastore delegate protocol methods
 //------------------------------------------------------------------------------
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
@@ -339,6 +392,12 @@
     
     return ret;
 }
+
+
+//******************
+//******************
+//**
+//**
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -353,17 +412,17 @@
                    dequeueReusableCellWithReuseIdentifier:@"APKeyboardCell"
                                              forIndexPath:indexPath];
         
-        if ( nil == kCell ) kCell = [[APKeyboardCell alloc]
-                                     initWithFrame:self.keyboardFrame];
+        if ( nil == kCell )
+                kCell = [[APKeyboardCell alloc]
+                                        initWithFrame:self.keyboardFrame];
         
         if (self.keyboardKeycolor)
-            
             kCell.btn.backgroundColor = self.keyboardKeycolor;
         
         [kCell.btn setTitle:_keys[indexPath.row]
                    forState:UIControlStateNormal];
         
-        btnImage         = ( [_keys[indexPath.row] isEqualToString:@"X"] )
+        btnImage = ( [_keys[indexPath.row] isEqualToString:@"X"] )
                          ? _backKey
                          : nil;
         
@@ -381,7 +440,7 @@
                       action:@selector(keyButtonPress:)
             forControlEvents:UIControlEventTouchUpInside];
 
-        cell             = kCell;
+        cell = kCell;
         
     } else {
 
@@ -391,18 +450,18 @@
                  dequeueReusableCellWithReuseIdentifier:@"APSimplePassportCell"
                                            forIndexPath:indexPath];
         
-        if ( nil == pCell ) pCell = [[APSimplePassCell alloc]
+        if ( nil == pCell )
+                pCell = [[APSimplePassCell alloc]
                                      initWithFrame:self.passportFrame];
         
-        pCell.label.text =
-        
-        ([_phraseCurrent[indexPath.row] isEqualToString:@" "]) ? @" " : @"*";
+        pCell.label.text =  ([_phraseCurrent[indexPath.row] isEqualToString:@" "]) ? @" " : @"*";
         
         cell = pCell;
     }
     
     return cell;
 }
+
 
 //------------------------------------------------------------------------------
 // Main processing
@@ -411,6 +470,21 @@
 
     
 }
+
+//******************
+//******************
+//**
+//**
+-(IBAction)forgotPass:(id)sender {
+    NSLog(@"here in forgot pass");
+    
+}
+
+
+//******************
+//******************
+//**
+//**
 -(IBAction)keyButtonPress:(id)sender {
     
     UIButton * b  = sender;
@@ -423,14 +497,14 @@
         
     } else {
         
-        if ( _code < _numberOfCodes
-        &&  ![b.titleLabel.text isEqualToString:@" "] ) {
+        if ( _code < _numberOfCodes  &&  ![b.titleLabel.text isEqualToString:@" "] ) {
          
             _phraseCurrent[_code] = b.titleLabel.text;
 
             _code++;
         }
     }
+    
     
     if (_code == _numberOfCodes) {
      
@@ -463,6 +537,12 @@
         [_passportCV reloadData];
     }
 }
+
+
+//******************
+//******************
+//**
+//**
 -(void)    verifyPhrase              {
 
         
@@ -488,7 +568,13 @@
     }
     
 }
--(BOOL)    verifyExisting{
+
+
+//******************
+//******************
+//**
+//**
+-(BOOL)    verifyExisting   {
     
     BOOL      ret = NO;
     
@@ -508,6 +594,11 @@
     return ret;
 }
 
+
+//******************
+//******************
+//**
+//**
 -(void)    verifyAlert               {
     
     _code = 0;
@@ -524,6 +615,12 @@
     
     if ( self.keyboardRotating ) [self rotateKeyboard];
 }
+
+
+//******************
+//******************
+//**
+//**
 -(void)    shakeEntry                {
     
     CATransform3D left  = CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f);
@@ -543,28 +640,31 @@
     
     [ _passportCV.layer addAnimation:anim forKey:nil ] ;
 }
--(void)    rotateKeyboard            {
 
-    NSArray   *k   = [NSArray arrayWithArray:_keys];
-    NSArray   *kl  = [NSArray arrayWithArray:_keyLabels];
-    NSInteger rand = 0;
-    
-    while ( !rand ) rand = random() % 10;
-    
-    if ( [k count] ) {
-        
-        for (int i = 0; i < 10; i++) {
-            
-            _keys[i]      =  k[rand];
-            _keyLabels[i] = kl[rand];
-            
-            rand = ( rand == 9 ) ? 0 : ++rand;
-         }
-        
-        [_keyboardCV reloadData];
+
+//******************
+//******************
+//**
+//**
+-(void)    rotateKeyboard            {
+    //shuffle the keys randomly
+    NSUInteger count = [_keys count];
+    if (count) {
+        for (NSUInteger i = count - 3; i > 0; i--) {
+            NSInteger rand = arc4random_uniform((u_int32_t)(i+1));
+            [_keys exchangeObjectAtIndex:i withObjectAtIndex:rand];
+            [_keyLabels exchangeObjectAtIndex:i withObjectAtIndex:rand];
+        }
     }
+    [_keyboardCV reloadData];
 }
 
+
+
+//******************
+//******************≥
+//**
+//**
 -(void)    finished                  {
     
     NSString* phrase = [self.phrase componentsJoinedByString:@""];

@@ -1,4 +1,4 @@
-# iMAS Application Password
+# iMAS Application Password[![analytics](http://www.google-analytics.com/collect?v=1&t=pageview&_s=1&dl=https%3A%2F%2Fgithub.com%2Fproject-imas%2Fapp-password&_u=MAC~&cid=1757014354.1393964045&tid=UA-38868530-1)]()
 
 ## Background
 
@@ -29,18 +29,29 @@ The "iMAS App Password" framework provides a simple way to include passcode supp
 - Drag AppPassword.xcodeproj      into the your project as a subproject
 - Drag SecureFoundation.xcodeproj into the your project as a subproject
 
-- Add AppPassword           to target’s build phase - target dependancies 
-- Add libSecureFoundation.a to target’s build phase - target dependancies 
+- Add AppPassword           to target’s build phase - target dependencies 
+- Add libSecureFoundation.a to target’s build phase - target dependencies 
 
-- Add AppPassword.framework to target’s build phase - link binary with libraries
+- Drag AppPassword.framework to target’s build phase - link binary with libraries
 - Add libSecureFoundation.a to target’s build phase - link binary with libraries 
 - Add Security.framework    to target’s build phase - link binary with libraries 
 - Add QuartzCore.framework  to target’s build phase - link binary with libraries
 
 - Add AppPassword.framework to target’s build phase - copy bundle resources (if using the "out of the box" storyboards)
-- Add AppPassword.framework to your application’s framework folder
+  - If you get the "AppPass OBJ" not found error on link, you may need to copy the "gold suitcase" AppPassword.framework file into the link binary with libraries build phase
+- Drag AppPassword.framework to your application’s framework folder (accept the defaults on the pop-up dialog)
+  - if you encounter a sym link error, double check the "copy bundle resources" list to ensure that you only have 1 entry for AppPassword.framework
 
-## Usage
+## Installation via CocoaPod
+
+- - If you don't already have CocoaPods installed, do `$ sudo gem install cocoapods` in your terminal. (See the [CocoaPods website](http://guides.cocoapods.org/using/getting-started.html#getting-started) for details.)
+- In your project directory, do `pod init` to create a Podfile.
+- Add `pod 'SecureFoundation', :git => 'https://github.com/project-imas/securefoundation.git'` to your PodFile
+- On the next line, add `pod 'AppPassword', :git => 'https://github.com/project-imas/app-password.git'`
+- Run `pod install`
+- Add `#import <AppPassword/AppPassword.h>` to your app
+
+### Usage
 
 The "App Password" folder contains one key class: `APPass`. It is designed as a class factory that provides either a simple or complex control for your AppViewController. The following are examples of instantiating and launching a control.
 
@@ -167,12 +178,26 @@ The sample applications demonstrate the implementation of the "out of the box" p
 
 <img align="center" src="https://github.com/project-imas/app-password/raw/master/APSimplePass.png">
 
-
+Instructions for running the sample apps:
+- git pull app-password
+- open XCode and open APSimplepass project file
+- Ensure XCode scheme is set to APSimplepass > < sim or device >
+- Clean, run and explore
 
 ### APComplexPassEncryt
 
 <img align="center" src="https://github.com/project-imas/app-password/raw/master/APComplexPass.png">
 
+### iPhone version (added to existing app with multiple views)
+Be sure to review - [AppPass Sample App](https://github.com/project-imas/AppPasswordSampleApp)
+<img align="center" src="https://github.com/project-imas/AppPasswordSampleApp/raw/master/readme_images/login_screen.jpg">
+
+
+Instructions for running the sample apps:
+- git pull app-password
+- open XCode and open APComplexPassEncryt project file.
+- Ensure XCode scheme is set to APComplexPassEncryt > < sim or device >
+- Clean, run and explore
 
 ## Recognition
 
@@ -193,8 +218,5 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/1872ba534d9159e437208c392bade83f "githalytics.com")](http://githalytics.com/project-imas/app-password)
 
 

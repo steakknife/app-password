@@ -277,6 +277,11 @@
                                                            completion:nil];
 }
 -(void) retryAlert {
+
+    if (self.resetEnabled == FALSE) {
+        //** exit code
+        exit(0);
+    }
     
     [[[UIAlertView alloc] initWithTitle:@"Reset passcode?"
                                 message:nil
@@ -310,5 +315,12 @@
         default:
             break;
     }    
+}
+
+- (IBAction)forgot:(id)sender {
+    
+    [self closeWindow];
+
+    [self.delegate forgotPassAP];
 }
 @end
